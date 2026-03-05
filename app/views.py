@@ -49,7 +49,7 @@ def news_detail(request, id):
 def home_page(request):
     news_list = News.objects.filter(status=News.Status.Published)
 
-    minix_news = News.published.order_by('-publish_time')[:5]
+    minix_news = News.published.order_by('-publish_time')[:7]
     uzb_news = News.published.filter(category__name="Uzbekiston").order_by('-publish_time')[:4]
     jahon_news = News.published.filter(category__name="Jahon").order_by('-publish_time')[:4]
     sport_news = News.published.filter(category__name="Sport").order_by('-publish_time')[:2]
@@ -98,21 +98,27 @@ def home_page(request):
 
 
 def uzb_page(request):
+    news_list = News.objects.filter(status=News.Status.Published)
+    uzbek_news = News.objects.filter(category__name="Uzbekiston")
     uzb_news_1 = News.published.filter(category__name="Uzbekiston").order_by('-publish_time')[0]
     uzb_news_2 = News.published.filter(category__name="Uzbekiston").order_by('-publish_time')[1]
     uzb_news_3 = News.published.filter(category__name="Uzbekiston").order_by('-publish_time')[2]
     uzb_news_4 = News.published.filter(category__name="Uzbekiston").order_by('-publish_time')[3]
 
     context = {
+        'news_list': news_list,
         'uzb_news_1': uzb_news_1,
         'uzb_news_2': uzb_news_2,
         'uzb_news_3': uzb_news_3,
         'uzb_news_4': uzb_news_4,
+        'uzbek_news': uzbek_news,
     }
 
     return render(request, "news/uzb.html", context=context)
 
 def jahon_page(request):
+    jahon_news_list = News.objects.filter(status=News.Status.Published)
+    jahon_news = News.objects.filter(category__name="Jahon")
     jahon_news_1 = News.published.filter(category__name="Jahon").order_by('-publish_time')[0]
     jahon_news_2 = News.published.filter(category__name="Jahon").order_by('-publish_time')[1]
     jahon_news_3 = News.published.filter(category__name="Jahon").order_by('-publish_time')[2]
@@ -124,11 +130,15 @@ def jahon_page(request):
         'jahon_news_2': jahon_news_2,
         'jahon_news_3': jahon_news_3,
         'jahon_news_4': jahon_news_4,
+        'jahon_news_list': jahon_news_list,
+        'jahon_news': jahon_news,
     }
 
     return render(request, "news/single.html", context=context)
 
 def sport_page(request):
+    sport_news_list = News.objects.filter(status=News.Status.Published)
+    sport_news = News.objects.filter(category__name="Sport")
     sport_news_1 = News.published.filter(category__name="Sport").order_by('-publish_time')[0]
     sport_news_2 = News.published.filter(category__name="Sport").order_by('-publish_time')[1]
     sport_news_3 = News.published.filter(category__name="Sport").order_by('-publish_time')[2]
@@ -141,11 +151,15 @@ def sport_page(request):
         'sport_news_2': sport_news_2,
         'sport_news_3': sport_news_3,
         'sport_news_4': sport_news_4,
+        'sport_news_list': sport_news_list,
+        'sport_news': sport_news,
     }
 
     return render(request, "news/sport.html", context=context)
 
 def fan_page(request):
+    fan_news_list = News.objects.filter(status=News.Status.Published)
+    fan_news = News.objects.filter(category__name="Fan-texnika")
     fan_news_1 = News.published.filter(category__name="Fan-texnika").order_by('-publish_time')[0]
     fan_news_2 = News.published.filter(category__name="Fan-texnika").order_by('-publish_time')[1]
     fan_news_3 = News.published.filter(category__name="Fan-texnika").order_by('-publish_time')[2]
@@ -158,6 +172,8 @@ def fan_page(request):
         'fan_news_2': fan_news_2,
         'fan_news_3': fan_news_3,
         'fan_news_4': fan_news_4,
+        'fan_news_list': fan_news_list,
+        'fan_news': fan_news,
     }
 
     return render(request, "news/fan.html", context=context)
